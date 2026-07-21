@@ -1,0 +1,8 @@
+# Microsoft Office temporary lock files
+~$*
+.~lock.*
+
+# Incomplete downloads and editor temporary files
+*.tmp
+*.part
+*.crdownload
