@@ -44,7 +44,12 @@ function Invoke-Git {
         $ErrorActionPreference = $previousErrorAction
     }
     if ($output -and -not $Quiet) {
-        $output | ForEach-Object { Write-Log ($_ | Out-String).Trim() }
+        $output | ForEach-Object {
+            $line = $_.ToString().Trim()
+            if ($line) {
+                Write-Log $line
+            }
+        }
     }
     if ($exitCode -ne 0 -and -not $AllowFailure) {
         throw "git $($Arguments -join ' ') failed with exit code $exitCode"
@@ -115,7 +120,6 @@ function Invoke-Sync {
 function Install-AutoSync {
     $powerShellExe = (Get-Process -Id $PID).Path
     $runCommand = '"{0}" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "{1}" -Watch -IntervalSeconds {2}' -f $powerShellExe, $PSCommandPath, $IntervalSeconds
-    New-Item -Path $RunKey -Force | Out-Null
     Set-ItemProperty -Path $RunKey -Name $RunName -Value $runCommand
 
     $existingPid = $null
