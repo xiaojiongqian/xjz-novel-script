@@ -35,8 +35,14 @@ function Invoke-Git {
         [switch]$Quiet
     )
 
-    $output = & git -C $RepoRoot @Arguments 2>&1
-    $exitCode = $LASTEXITCODE
+    $previousErrorAction = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        $output = & git -C $RepoRoot @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previousErrorAction
+    }
     if ($output -and -not $Quiet) {
         $output | ForEach-Object { Write-Log ($_ | Out-String).Trim() }
     }
