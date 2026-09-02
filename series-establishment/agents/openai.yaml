@@ -1,0 +1,7 @@
+interface:
+  display_name: "Series Establishment"
+  short_description: "Build stable comic or picture-book series bibles"
+  default_prompt: "Use $series-establishment to identify this as a comic or picture-book series, run project intake, and establish its production bible and Chinese usage guide."
+
+policy:
+  allow_implicit_invocation: true
